@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, createContext } from "react";
+import { ToastContainer } from "react-toastify";
+import Login from "./components/login/Login";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "react-toastify/dist/ReactToastify.css";
+import Todo from "./components/todo/Todo";
+
+export const AuthContext = createContext(null);
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+      <div className="container">
+        <ToastContainer position="top-center" autoClose={2000} />
+        {isAuthenticated ? <Todo /> : <Login />}
+      </div>
+    </AuthContext.Provider>
   );
 }
 
